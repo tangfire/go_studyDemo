@@ -3,6 +3,7 @@ package main
 import "fmt"
 
 type SingInterface interface {
+	GetName() string
 	Sing()
 }
 
@@ -23,7 +24,33 @@ func (d Dog) Sing() {
 }
 
 func sing(c SingInterface) {
+	//v, ok := c.(Cat)
+	//fmt.Println(v, ok)
+	switch v := c.(type) {
+	case Cat:
+
+		fmt.Println(v)
+	case Dog:
+		fmt.Println(v)
+	default:
+		fmt.Println("其他")
+	}
 	c.Sing()
+	fmt.Println(c.GetName())
+
+}
+
+func (c Cat) GetName() string {
+	return c.Name
+}
+
+func (d Dog) GetName() string {
+	return d.Name
+}
+
+// interface{}的别名为any
+func printAll(val interface{}) {
+	fmt.Println(val)
 }
 
 func main() {
@@ -32,5 +59,8 @@ func main() {
 
 	dog := Dog{Name: "wang"}
 	sing(dog)
+
+	printAll(cat)
+	printAll(dog)
 
 }
